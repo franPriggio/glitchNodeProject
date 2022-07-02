@@ -1,4 +1,4 @@
-class Contenedor {
+class ManejoArchivos {
   constructor(nombreArchivo) {
     this.nombreArchivo = nombreArchivo;
     this.products = [];
@@ -62,9 +62,8 @@ class Contenedor {
     );
     let contenidoObjActual = JSON.parse(contenidoActual);
 
-    contenidoObjActual.forEach((element) => {
-      if (element?.id === Number) return console.log({ element });
-    });
+    const findProduct = contenidoObjActual.find((prod) => prod.id === Number);
+    return !findProduct ? "No existe producto" : findProduct;
   }
 
   async getAll() {
@@ -74,7 +73,8 @@ class Contenedor {
       this.nombreArchivo,
       "utf-8"
     );
-    return console.log(JSON.parse(contenidoActual));
+
+    return JSON.parse(contenidoActual);
   }
 
   async deleteById(Number) {
@@ -109,24 +109,32 @@ class Contenedor {
   }
 }
 
-const newCont = new Contenedor("./archivo.txt");
+module.exports = ManejoArchivos;
 
-async function crearProductos() {
-  await newCont.save({
-    title: "Tenedor",
-    price: "20",
-    thumbnail: "ruta/imagen/tenedor.jpeg",
-  });
-  await newCont.save({
-    title: "Cuchara",
-    price: "15",
-    thumbnail: "ruta/imagen/cuchara.jpeg",
-  });
-}
+// async function crearProductos() {
+//   await newCont.save({
+//     title: "Escuadra",
+//     price: 123.45,
+//     thumbnail:
+//       "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png",
+//   });
+//   await newCont.save({
+//     title: "Calculadora",
+//     price: 234.56,
+//     thumbnail:
+//       "https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-256.png",
+//   });
+//   await newCont.save({
+//     title: "Globo Terráqueo",
+//     price: 345.67,
+//     thumbnail:
+//       "https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png",
+//   });
+// }
 
-crearProductos();
+//crearProductos();
 
-//Descomentar para ejecutar el resto de las funciones
+//Descomentar para probar resto de las funciones
 
 //newCont.getById(2);
 //newCont.getAll();

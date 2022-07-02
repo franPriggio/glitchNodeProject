@@ -1,27 +1,24 @@
-const http = require("http");
-const moment = require("moment");
 const express = require("express");
+const ManejoArchivos = require("./contenedor.js");
 const app = express();
-
-const PORT = 8089;
+const util = require("./util.js");
+const PORT = 8080;
 
 const server = app.listen(PORT, () => {
   console.log(`Servidor http escuchando en el puerto ${server.address().port}`);
 });
-
 server.on("error", (error) => console.log(`Error en servidor ${error}`));
 
-app.get("/", (solicitud, respuesta) => {
-  respuesta.send({ resp: "<h1 style=color:blue>Bienvenidos a express</h1>" });
+const newCont = new ManejoArchivos("./productos.txt");
+
+app.get("/productos", async (req, res) => {
+  const allProducts = await newCont.getAll();
+  res.status(200).send({ allProducts });
 });
 
-let visitas = 0;
-app.get("/visitas", (solicitud, respuesta) => {
-  visitas++;
-  respuesta.send({ resp: `<h2>Cantidad de visitas al sitio: ${visitas}</h2>` });
-});
-
-app.get("/fyh", (solicitud, respuesta) => {
-  const fechaActual = moment().format("DD/MM/YYYY HH:MM:SS");
-  respuesta.send({ resp: fechaActual });
+app.get("/productoRandom", async (req, res) => {
+  let productos = await newCont.getAll();
+  const randomNumber = new util().generateRandom(1, productos.length + 1);
+  const getProduct = await newCont.getById(randomNumber);
+  res.send({ getProduct });
 });
