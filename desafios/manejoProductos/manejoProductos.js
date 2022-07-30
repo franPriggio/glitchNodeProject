@@ -1,9 +1,42 @@
-class ManejoArchivos {
+const ManejoArchivos = require("../manejoArchivos/multerArchives.js");
+
+class ManejoProductos {
   constructor(nombreArchivo) {
     this.nombreArchivo = nombreArchivo;
     this.products = [];
   }
 
+  async update(object) {
+    Object.keys(producto).forEach((key) => {
+      producto[key] = newData[key];
+    });
+
+    const fs = require("fs");
+    //leo contenido actual y parseo
+    const contenidoActual = await fs.promises.readFile(
+      this.nombreArchivo,
+      "utf-8"
+    );
+    let contenidoObjActual = JSON.parse(contenidoActual);
+    const updatedProducts = contenidoObjActual.map((obj) => {
+      obj.id === object.id
+        ? {
+            ...obj,
+            tile: object.title,
+            price: object.price,
+            thumbnail: object.thumbnail,
+          }
+        : obj;
+    });
+    this.products = updatedProducts;
+
+    await fs.promises.writeFile(
+      this.nombreArchivo,
+      JSON.stringify(this.products)
+    );
+
+    return updatedProducts;
+  }
   async save(object) {
     const fs = require("fs");
 
@@ -34,12 +67,14 @@ class ManejoArchivos {
 
       //Asigno id a nuevo objeto
       //agrego nuevo objeto al objeto actual y escribo archivo
-      let nuevoId = this.products[this.products.length - 1].id++;
+      console.log(
+        "this.products[this.products.length - 1].id: " +
+          this.products[this.products.length - 1].id
+      );
 
-      let newProducts = [
-        ...this.products,
-        { ...object, id: this.products.length },
-      ];
+      let nuevoId = this.products[this.products.length - 1].id + 1;
+      console.log("nuevoId: " + nuevoId);
+      let newProducts = [...this.products, { ...object, id: nuevoId }];
       this.products = newProducts;
 
       await fs.promises.writeFile(
@@ -109,15 +144,22 @@ class ManejoArchivos {
   }
 }
 
-module.exports = ManejoArchivos;
+module.exports = ManejoProductos;
 
-// async function crearProductos() {
-//   await newCont.save({
-//     title: "Escuadra",
-//     price: 123.45,
-//     thumbnail:
-//       "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png",
-//   });
+async function crearProductos() {
+  const newCont = new ManejoProductos("./productos.txt");
+  try {
+    await newCont.save({
+      title: "Cuaderno",
+      price: 100,
+      thumbnail:
+        "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png",
+    });
+  } catch (error) {
+    console.error("Error al borrar objecto", error);
+  }
+}
+crearProductos();
 //   await newCont.save({
 //     title: "Calculadora",
 //     price: 234.56,
@@ -130,9 +172,6 @@ module.exports = ManejoArchivos;
 //     thumbnail:
 //       "https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png",
 //   });
-// }
-
-//crearProductos();
 
 //Descomentar para probar resto de las funciones
 
