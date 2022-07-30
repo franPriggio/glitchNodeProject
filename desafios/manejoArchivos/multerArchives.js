@@ -5,8 +5,10 @@ const storage = multer.diskStorage({
     cb(null, "/petUploads");
   },
   filename: function (req, file, cb) {
+    const fileName = file.originalname.split(".")[0];
+    const fileExtension = file.originalname.split(".")[1];
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    cb(null, file.fieldname + "-" + uniqueSuffix);
+    cb(null, fileName + "-" + uniqueSuffix + "." + fileExtension);
   },
 });
 

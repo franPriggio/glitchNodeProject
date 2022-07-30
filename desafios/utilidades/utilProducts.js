@@ -16,4 +16,4 @@ class UtilProducts {
     return rand;
   }
 }
-export default Util;
+module.exports = UtilProducts;

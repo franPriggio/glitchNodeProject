@@ -1,11 +1,42 @@
-<h1>Productos</h1>
-<form action="/api/productos/" method="post">
-  <label for="title">Title</label>
-  <input type="text" name="title" id="title" /><br /><br />
-  <label for="price">Price</label>
-  <input type="text" name="price" id="price" /><br /><br />
-  <label for="thumbnail">Thumbnail</label>
-  <input type="text" name="thumbnail" id="thumbnail" /><br /><br />
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script>
+  </head>
+  <body>
+    <h1>Productos</h1>
+    <form action="/api/productos/" method="post">
+      <label for="title">Title</label>
+      <input type="text" name="title" id="title" /><br /><br />
+      <label for="price">Price</label>
+      <input type="text" name="price" id="price" /><br /><br />
+      <label for="thumbnail">Thumbnail</label>
+      <input type="text" name="thumbnail" id="thumbnail" /><br /><br />
 
-  <input type="submit" value="Agregar producto" />
-</form>
+      <input type="submit" value="Agregar producto" />
+    </form>
+    <!-- SINGLE FILE -->
+    <form
+      action="/api/productos/uploadfile"
+      enctype="multipart/form-data"
+      method="POST"
+    >
+      <input type="file" name="myFile" />
+      <input type="submit" value="Upload a file" />
+    </form>
+    <!-- MULTIPLE FILES -->
+    <form
+      action="/api/productos/uploadmultiple"
+      enctype="multipart/form-data"
+      method="POST"
+    >
+      Select images:<input type="file" name="myFiles" multiple />
+      <input type="submit" value="Upload your files" />
+    </form>
+  </body>
+</html>

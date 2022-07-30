@@ -1,3 +1,5 @@
+const ManejoArchivos = require("../manejoArchivos/multerArchives.js");
+
 class ManejoProductos {
   constructor(nombreArchivo) {
     this.nombreArchivo = nombreArchivo;
@@ -145,7 +147,7 @@ class ManejoProductos {
 module.exports = ManejoProductos;
 
 async function crearProductos() {
-  const newCont = new ManejoArchivos("./productos.txt");
+  const newCont = new ManejoProductos("./productos.txt");
   try {
     await newCont.save({
       title: "Cuaderno",
