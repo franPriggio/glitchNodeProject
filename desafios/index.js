@@ -15,17 +15,18 @@ const server = app.listen(PORT, () => {
 });
 
 // defino el motor de plantilla
-app.engine(
-  "hbs",
-  handlebars.engine({
-    extname: ".hbs",
-    defaultLayout: "index.hbs",
-    layoutsDir: __dirname + "/views/layouts",
-    partialsDir: __dirname + "/views/partials",
-  })
-);
+// app.engine(
+//   "hbs",
+//   handlebars.engine({
+//     extname: ".hbs",
+//     defaultLayout: "index.hbs",
+//     layoutsDir: __dirname + "/views/layouts",
+//     partialsDir: __dirname + "/views/partials",
+//   })
+// );
 
-app.set("view engine", "hbs");
+// //app.set("view engine", "hbs");
+app.set("view engine", "pug");
 app.set("views", "./views");
 app.use("/", productos);
 
