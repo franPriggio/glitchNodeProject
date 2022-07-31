@@ -8,13 +8,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/static", express.static(__dirname + "public"));
 app.use("/static", express.static(__dirname + "files"));
-//app.use("/api/productos", productos);
 
 const server = app.listen(PORT, () => {
   console.log(`Servidor http escuchando en el puerto ${server.address().port}`);
 });
 
-// defino el motor de plantilla
+// defino el motor de plantilla hbs
 // app.engine(
 //   "hbs",
 //   handlebars.engine({
