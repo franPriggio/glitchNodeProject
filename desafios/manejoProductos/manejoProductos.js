@@ -67,13 +67,7 @@ class ManejoProductos {
 
       //Asigno id a nuevo objeto
       //agrego nuevo objeto al objeto actual y escribo archivo
-      console.log(
-        "this.products[this.products.length - 1].id: " +
-          this.products[this.products.length - 1].id
-      );
-
       let nuevoId = this.products[this.products.length - 1].id + 1;
-      console.log("nuevoId: " + nuevoId);
       let newProducts = [...this.products, { ...object, id: nuevoId }];
       this.products = newProducts;
 

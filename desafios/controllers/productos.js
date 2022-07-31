@@ -17,7 +17,8 @@ const newProdMgr = new ManejoProductos("./productos.txt");
 
 router.get("/", function (req, res) {
   //res.render("ingresoproductos");
-  res.render("ingresoproductos.pug");
+  //res.render("ingresoproductos.pug");
+  res.render("pages/ingresoproductos");
 });
 
 router.get("/productos", async (req, res) => {
@@ -27,7 +28,10 @@ router.get("/productos", async (req, res) => {
     // res.render("mostrarproductos.hbs", {
     //   productos: allProducts,
     // });
-    res.render("mostrarproductos.pug", {
+    // res.render("mostrarproductos.pug", {
+    //   productos: allProducts,
+    // });
+    res.render("pages/mostrarproductos", {
       productos: allProducts,
     });
   } catch (error) {
