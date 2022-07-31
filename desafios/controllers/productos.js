@@ -16,14 +16,22 @@ const newProdMgr = new ManejoProductos("./productos.txt");
 // });
 
 router.get("/", function (req, res) {
-  res.render("ingresoproductos");
+  //res.render("ingresoproductos");
+  //res.render("ingresoproductos.pug");
+  res.render("pages/ingresoproductos");
 });
 
 router.get("/productos", async (req, res) => {
   try {
     const allProducts = await newProdMgr.getAll();
     // res.status(200).send({ allProducts });
-    res.render("mostrarproductos", {
+    // res.render("mostrarproductos.hbs", {
+    //   productos: allProducts,
+    // });
+    // res.render("mostrarproductos.pug", {
+    //   productos: allProducts,
+    // });
+    res.render("pages/mostrarproductos", {
       productos: allProducts,
     });
   } catch (error) {

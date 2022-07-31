@@ -8,24 +8,25 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/static", express.static(__dirname + "public"));
 app.use("/static", express.static(__dirname + "files"));
-//app.use("/api/productos", productos);
 
 const server = app.listen(PORT, () => {
   console.log(`Servidor http escuchando en el puerto ${server.address().port}`);
 });
 
-// defino el motor de plantilla
-app.engine(
-  "hbs",
-  handlebars.engine({
-    extname: ".hbs",
-    defaultLayout: "index.hbs",
-    layoutsDir: __dirname + "/views/layouts",
-    partialsDir: __dirname + "/views/partials",
-  })
-);
+// defino el motor de plantilla hbs
+// app.engine(
+//   "hbs",
+//   handlebars.engine({
+//     extname: ".hbs",
+//     defaultLayout: "index.hbs",
+//     layoutsDir: __dirname + "/views/layouts",
+//     partialsDir: __dirname + "/views/partials",
+//   })
+// );
 
-app.set("view engine", "hbs");
+// //app.set("view engine", "hbs");
+// app.set("view engine", "pug");
+app.set("view engine", "ejs");
 app.set("views", "./views");
 app.use("/", productos);
 

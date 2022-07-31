@@ -1,7 +1,3 @@
-<style>
-  .thumbnail{ height: 30px; }
-</style>
-
 <div class="container bg-light p-4 my-2 mx-auto">
   <h1 class="text-primary mb-5">Vista de productos</h1>
   <table class="table">
@@ -11,7 +7,7 @@
         <tr class="table-dark align-middle">
           <td>{{this.title}}</td>
           <td>{{this.price}}</td>
-          <td><img src={{this.thumbnail}} class="thumbnail" alt="" /></td>
+          <td><img src={{this.thumbnail}} style="height: 32px;" alt="" /></td>
         </tr>
       {{/each}}
     </tbody>
