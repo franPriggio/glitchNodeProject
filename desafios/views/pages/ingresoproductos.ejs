@@ -16,42 +16,48 @@
     <title>Products Form</title>
   </head>
 
-  <div class="form-body">
-    <div class="row">
-        <div class="form-holder">
-            <div class="form-content">
-                <div class="form-items">
-                    <h3>Enter product data</h3>
-                    <p>Please, fill in the data below.</p>
-                    <form action="/productos" class="requires-validation" novalidate>
-                      
-                      <div class="col-md-12">
-                        <label for="title" class="form-label fw-semibold">Name:</label>
-                        <input type="text" class="form-control" name="title" required/>
-                        <div class="invalid-feedback">Name field cannot be blank!</div>
-                      </div>
-                      <div class="col-md-12 mt-3">
-                        <label for="price" class="form-label fw-semibold">Price:</label>
-                        <input type="number" class="form-control" name="price" required/>
-                        <div class="invalid-feedback">Price must be a number and cannot be blank!</div>
-                      </div>
+  <body>
+    <div class="container form-body">
+      <div class="row">
+          <div class="form-holder col-12">
+              <div class="form-content">
+                  <div class="form-items">
+                      <h3>Enter product data</h3>
+                      <p>Please, fill in the data below.</p>
+                      <form action="/productos" class="requires-validation" novalidate>
+                        
+                        <div class="col-md-12">
+                          <label for="title" class="form-label fw-semibold">Name:</label>
+                          <input type="text" class="form-control" name="title" required/>
+                          <div class="invalid-feedback">Name field cannot be blank!</div>
+                        </div>
+                        <div class="col-md-12 mt-3">
+                          <label for="price" class="form-label fw-semibold">Price:</label>
+                          <input type="number" class="form-control" name="price" required/>
+                          <div class="invalid-feedback">Price must be a number and cannot be blank!</div>
+                        </div>
 
-                      <div class="col-md-12 mt-3">
-                        <label for="thumbnail" class="form-label fw-semibold">Photo URL:</label>
-                        <input type="text" class="form-control" name="thumbnail" />
-                      </div>
+                        <div class="col-md-12 mt-3">
+                          <label for="thumbnail" class="form-label fw-semibold">Photo URL:</label>
+                          <input type="text" class="form-control" name="thumbnail" />
+                        </div>
 
-                      <div class="form-button mt-5">
-                          <button id="submit" type="submit" class="btn btn-primary">Add</button>
-                      </div>
-                      <!-- <button id="clear" class="btn btn-primary" onclick="clearForm()">Clear Form</button> -->
-                    </form>
-                </div>
-            </div>
-            <a id="seeprods" href="/productos" role="button" class="btn-prod-primary">Watch Products</a>
-        </div>
+                        <div class="form-button mt-5">
+                            <button id="submit" type="submit" class="btn btn-primary">Add</button>
+                        </div>
+                        <!-- <button id="clear" class="btn btn-primary" onclick="clearForm()">Clear Form</button> -->
+                      </form>
+                  </div>
+              </div>
+              <a id="seeprods" href="/productos" role="button" class="btn-prod-primary">Watch Products</a>
+          </div>
+      </div>
+      <div class="row">
+        <%- include("../partials/prods_form.ejs" , {productos : productos});%>  
+        
+      </div>
     </div>
-  </div>
+  </body>
 
 
     <script

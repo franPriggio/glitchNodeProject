@@ -19,10 +19,13 @@ exports.getAllProducts = async function () {
   return await newProdMgr.getAll();
 }
 
-router.get("/", function (req, res) {
+router.get("/", async function (req, res) {
   //res.render("ingresoproductos");
   //res.render("ingresoproductos.pug");
-  res.render("pages/ingresoproductos");
+  const allProducts = await newProdMgr.getAll();
+  res.render("pages/ingresoproductos", {
+      productos: allProducts,
+    });
 });
 
 router.get("/productos", async (req, res) => {
