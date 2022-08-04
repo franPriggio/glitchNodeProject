@@ -15,6 +15,10 @@ const newProdMgr = new ManejoProductos("./productos.txt");
 //   }
 // });
 
+exports.getAllProducts = async function () {
+  return await newProdMgr.getAll();
+}
+
 router.get("/", function (req, res) {
   //res.render("ingresoproductos");
   //res.render("ingresoproductos.pug");
