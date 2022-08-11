@@ -1,0 +1,32 @@
+<div class="row">
+    
+    <h1 class="table_title mt-5 mb-5 col-12">Centro de mensajes</h1>
+
+    <label for="title" class="form-label fw-semibold col-3">Email:</label>
+    <input id="inp_name" type="text" class="form-control col-3" name="title" required/>
+
+    <hr/>
+
+    <div id="messages">
+
+        <div>
+            {{#each messages}}
+                <p>
+                <span class='fw-bold text-primary'>{{this.email}}</span>
+                <span style='color:brown;'>{{this.date}}</span>
+                :
+                <span class='fst-italic text-success'>{{this.message}}</span></p>
+
+            {{/each}}
+        </div>
+
+        
+    </div>
+
+    <div class="d-flex justify-content-start">
+        <input placeholder="Envía un mensaje..." type='text' class='form-control' id='message'
+            style="max-width:200px;" />
+        <button id='sendMessage' class='btn btn-success ms-3'>Enviar!</button>
+    </div>
+
+</div>

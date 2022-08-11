@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html lang="es">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <base href="/">
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -15,7 +12,6 @@
       type="text/css"/>
     <title>Products Form</title>
   </head>
-
   <body>
     <div class="container form-body">
       <div class="row">
@@ -24,50 +20,39 @@
                   <div class="form-items">
                       <h3>Enter product data</h3>
                       <p>Please, fill in the data below.</p>
-                      <form action="/productos" class="requires-validation" novalidate>
+                      <form class="requires-validation" novalidate>
                         
                         <div class="col-md-12">
                           <label for="title" class="form-label fw-semibold">Name:</label>
-                          <input type="text" class="form-control" name="title" required/>
+                          <input id="inp_name" type="text" class="form-control" name="title" required/>
                           <div class="invalid-feedback">Name field cannot be blank!</div>
                         </div>
                         <div class="col-md-12 mt-3">
                           <label for="price" class="form-label fw-semibold">Price:</label>
-                          <input type="number" class="form-control" name="price" required/>
+                          <input id="inp_price" type="number" class="form-control" name="price" required/>
                           <div class="invalid-feedback">Price must be a number and cannot be blank!</div>
                         </div>
 
                         <div class="col-md-12 mt-3">
                           <label for="thumbnail" class="form-label fw-semibold">Photo URL:</label>
-                          <input type="text" class="form-control" name="thumbnail" />
+                          <input id="inp_url" type="text" class="form-control" name="thumbnail" />
                         </div>
 
                         <div class="form-button mt-5">
-                            <button id="submit" type="submit" class="btn btn-primary">Add</button>
+                            <button id="addProd" onclick="addProduct()" class="btn btn-primary">Add</button>
                         </div>
                         <!-- <button id="clear" class="btn btn-primary" onclick="clearForm()">Clear Form</button> -->
                       </form>
                   </div>
               </div>
-              <a id="seeprods" href="/productos" role="button" class="btn-prod-primary">Watch Products</a>
           </div>
       </div>
-      <div class="row">
-        <%- include("../partials/prods_form.ejs" , {productos : productos});%>  
-        
-      </div>
+      <div id="prodsInForm" class="row"></div>
+
+      <div id="chat" class="row"></div>
+      
     </div>
+    <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
+    <script src="/js/prods/prod_form.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
   </body>
-
-
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
-      crossorigin="anonymous"
-    ></script>
-    <script 
-      src="/js/prods/prod_form.js">
-    </script>
-  </body>
-</html>
-
