@@ -78,16 +78,19 @@ io.on("connection", (socket) => {
     );
 
   const compileChatTmp = hnbl.compile(hnbleChatTmpl);
-  const dataChatTmp = compileChatTmp({messages : messages, emptyProds : true})
+  const dataChatTmp = compileChatTmp({messages : messages})
 
   //en inicio emit de todos los mensajes
   socket.emit("messages", dataChatTmp);
 
   //to all clients
 
-  socket.on("new-message", (data) => {
-    mensajes.push({ socketid: socket.id, mensaje: data });
-    io.sockets.emit("mensajes", mensajes);
+  socket.on("new-msg", async (data) => {
+    messages.push(data);
+    await fs.promises.writeFile('mensajes.txt', `${JSON.stringify(messages)}`);
+    const compileChatTmp = hnbl.compile(hnbleChatTmpl);
+    const dataChatTmp = compileChatTmp({messages : messages})
+    io.sockets.emit("messages", dataChatTmp);
   });
 
   socket.on("new-product", async (data) => {
@@ -95,11 +98,7 @@ io.on("connection", (socket) => {
     prods = await newProdMgr.getAll();
     const compileTmp = hnbl.compile(hnbleTmpl);
     const dataTmp = compileTmp({products : prods, emptyProds : true})
-    io.sockets.emit("prods", dataTmp);
+    io.sockets.emit("products", dataTmp);
   });
 
-  //message from client
-  socket.on("clientNotif", (data) => {
-    console.log(data);
-  });
 });

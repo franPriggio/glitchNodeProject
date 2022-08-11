@@ -1,7 +1,1 @@
-[
-    {
-        "email": "fran@hotmail.com",
-        "date": "[03/08/2022 19: 32: 36]",
-        "message": "Hola! Como estas?"
-    }
-]
+[{"email":"fran@hotmail.com","date":"[03/08/2022 19: 32: 36]","message":"Hola! Como estas?"},{"email":"Bien y vos?","date":"11/08/2022 00:10:01","message":""},{"email":"Bien y vos?","date":"11/08/2022 00:10:04","message":""},{"email":"Bien y vos?","date":"11/08/2022 00:10:05","message":""},{"email":"Bien y vos?","date":"11/08/2022 00:10:05","message":""},{"email":"Bien y vos?","date":"11/08/2022 00:10:05","message":""},{"email":"Bien y vos?","date":"11/08/2022 00:10:05","message":""},{"email":"","date":"11/08/2022 00:11:48","message":"impecable!"},{"email":"","date":"11/08/2022 00:12:39","message":"Me alegro!"},{"email":"","date":"11/08/2022 00:13:04","message":"barbaro"},{"email":"","date":"11/08/2022 00:13:11","message":"asdgsa"},{"email":"","date":"11/08/2022 00:13:12","message":"asdgsa"},{"email":"","date":"11/08/2022 00:13:12","message":"asdgsa"},{"email":"","date":"11/08/2022 00:13:12","message":"asdgsa"},{"email":"","date":"11/08/2022 00:14:14","message":"async"},{"email":"","date":"11/08/2022 00:17:35","message":"a ver"},{"email":"","date":"11/08/2022 00:17:39","message":"ahora seeee"},{"email":"y el email","date":"11/08/2022 00:18:05","message":""},{"email":"emailFran","date":"11/08/2022 00:18:39","message":""},{"email":"con email","date":"11/08/2022 00:19:05","message":"vapai"},{"email":"emailFran","date":"11/08/2022 00:19:34","message":"a full"},{"email":"william.masson@cloverhealth.com","date":"11/08/2022 00:23:35","message":"opanga"}]
