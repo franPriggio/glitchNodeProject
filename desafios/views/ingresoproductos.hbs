@@ -14,6 +14,7 @@
   </head>
   <body>
     <div class="container form-body">
+      {{#if isAdmin }}
       <div class="row">
           <div class="form-holder col-12">
               <div class="form-content">
@@ -32,21 +33,31 @@
                           <input id="inp_price" type="number" class="form-control" name="price" required/>
                           <div class="invalid-feedback">Price must be a number and cannot be blank!</div>
                         </div>
-
                         <div class="col-md-12 mt-3">
                           <label for="thumbnail" class="form-label fw-semibold">Photo URL:</label>
                           <input id="inp_url" type="text" class="form-control" name="thumbnail" />
                         </div>
-
+                        <div class="col-md-12 mt-3">
+                          <label for="thumbnail" class="form-label fw-semibold">Description:</label>
+                          <input id="inp_desc" type="text" class="form-control" name="thumbnail" />
+                        </div>
+                        <div class="col-md-12 mt-3">
+                          <label for="thumbnail" class="form-label fw-semibold">Code:</label>
+                          <input id="inp_code" type="text" class="form-control" name="thumbnail" />
+                        </div>
+                        <div class="col-md-12 mt-3">
+                          <label for="thumbnail" class="form-label fw-semibold">Stock:</label>
+                          <input id="inp_stock" type="number" class="form-control" name="thumbnail" />
+                        </div>
                         <div class="form-button mt-5">
                             <button id="addProd" onclick="addProduct()" class="btn btn-primary">Add</button>
                         </div>
-                        <!-- <button id="clear" class="btn btn-primary" onclick="clearForm()">Clear Form</button> -->
                       </form>
                   </div>
               </div>
           </div>
       </div>
+      {{/if}}
       <div id="prodsInForm" class="row"></div>
 
       <div id="chat" class="row"></div>

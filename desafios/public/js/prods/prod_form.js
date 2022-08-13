@@ -1,39 +1,49 @@
 const socket = io.connect();
 
-function addProduct(){
+async function addProduct(){
   let name = document.getElementById('inp_name').value;
   let price = document.getElementById('inp_price').value;
   let url = document.getElementById('inp_url').value;
+  let description = document.getElementById('inp_desc').value;
+  let code = document.getElementById('inp_code').value;
+  let stock = document.getElementById('inp_stock').value;
+  let tmStmp = Date.now();
 
   const newProd = {
     title: name,
     price: price,
+    timestamp : tmStmp,
+    description : description,
+    code : code,
+    stock : stock,
     thumbnail: url,
   };
 
   name = "";
   price = "";
   url = "";
+  description = "";
+  code = "";
+  stock = "";
 
-  socket.emit("new-product", newProd);
+  //fetch
+  postData('/api/productos', newProd)
+  .then((data) => {
+    //compile hbs and render
+  });
 }
 
-function addMessage() {
-   let email = document.getElementById('inp_email').value;
-   let msg = document.getElementById('inp_msg').value;
-   const msgDate = moment().format('DD/MM/YYYY HH:mm:ss');
-
-  const newMsg = {
-    email: email,
-    date: msgDate,
-    message: msg,
-  };
-
-  if(email && msg) {
-    socket.emit("new-msg", newMsg);
-  }
-  msg = "";
-
+async function postData(url = '', data = {}) {
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(data) // body data type must match "Content-Type" header
+  });
+  return response.json(); // parses JSON response into native JavaScript objects
 }
 
 function render(data) {
@@ -52,9 +62,6 @@ socket.on("prods", (data) => {
   document.getElementById("prodsInForm").innerHTML = data;
 });
 
-socket.on('messages', function (data) {
-  document.getElementById("chat").innerHTML = data;
-});
 
 (function () {
   "use strict";

@@ -8,12 +8,17 @@ const app = express();
 const fs = require("fs");
 const httpServer = new HttpServer(app);
 const io = new IOServer(httpServer);
-const PORT = 2374;
-const productos = require("./controllers/productos.js");
+const PORT = process.env.PORT || 8080;
+const productos = require("./controllers/product.js");
+const carrito = require("./controllers/carrito.js");
+const ManejoProductos = require("./objectsManager/prodManager.js");
+const newProdMgr = new ManejoProductos("./productos.txt");
+const newCarritoMgr = new ManejoProductos("./carrito.txt");
+
+//local vars
 let prods = [];
 let messages = [];
-const ManejoProductos = require("./manejoProductos/manejoProductos.js");
-const newProdMgr = new ManejoProductos("./productos.txt");
+
 
 //configuracion de app middleware
 app.use(express.json());
@@ -35,7 +40,8 @@ app.engine(
 
 app.set("view engine", "hbs");
 app.set("views", "./views");
-app.use("/", productos);
+app.use("/api/productos", productos);
+app.use("/api/carrito", carrito);
 
 //escucha de server
 const server = httpServer.listen(PORT, async () => {
