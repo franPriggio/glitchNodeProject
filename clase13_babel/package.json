@@ -1,0 +1,22 @@
+{
+  "name": "clase13_babel",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel ./origen.js -o ./destino.js -w"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/cli": "^7.18.9",
+    "@babel/core": "^7.18.9",
+    "@babel/preset-env": "^7.18.9",
+    "express": "^4.18.1",
+    "socket.io": "^4.5.1",
+    "typescript": "^4.7.4"
+  },
+  "devDependencies": {},
+  "description": ""
+}

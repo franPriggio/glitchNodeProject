@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width-device-width,initial-scale=1.0" />
+    <title>Sockets</title>
+    <link rel="stylesheet" href="/estilos.css" />
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/index.js"></script>
+  </head>
+  <body>
+    <h1>TUTORIAL DE SOCKETS.IO</h1>
+
+    <form method="post">
+      <label for="mensaje">Mensaje</label>
+      <input type="text" name="mensaje" id="mensaje" /><br /><br />
+      <input type="button" value="Enviar Mensaje" onclick="enviarMensaje()" />
+    </form>
+
+    <div id="messages"></div>
+  </body>
+</html>
