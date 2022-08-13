@@ -1,15 +1,12 @@
-const ManejoArchivos = require("../manejoArchivos/multerArchives.js");
+const ManejoArchivos = require("../fileManager/multerArchives.js");
 
-class ManejoProductos {
+class ProdManager {
   constructor(nombreArchivo) {
     this.nombreArchivo = nombreArchivo;
     this.products = [];
   }
 
   async update(object) {
-    Object.keys(producto).forEach((key) => {
-      producto[key] = newData[key];
-    });
 
     const fs = require("fs");
     //leo contenido actual y parseo
@@ -138,38 +135,4 @@ class ManejoProductos {
   }
 }
 
-module.exports = ManejoProductos;
-
-async function crearProductos() {
-  const newCont = new ManejoProductos("./productos.txt");
-  try {
-    await newCont.save({
-      title: "Cuaderno",
-      price: 100,
-      thumbnail:
-        "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png",
-    });
-  } catch (error) {
-    console.error("Error al borrar objecto", error);
-  }
-}
-crearProductos();
-//   await newCont.save({
-//     title: "Calculadora",
-//     price: 234.56,
-//     thumbnail:
-//       "https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-256.png",
-//   });
-//   await newCont.save({
-//     title: "Globo Terráqueo",
-//     price: 345.67,
-//     thumbnail:
-//       "https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png",
-//   });
-
-//Descomentar para probar resto de las funciones
-
-//newCont.getById(2);
-//newCont.getAll();
-//newCont.deleteById(2);
-//newCont.deleteAll();
+module.exports = ProdManager;

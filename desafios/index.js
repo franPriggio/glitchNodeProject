@@ -8,12 +8,17 @@ const app = express();
 const fs = require("fs");
 const httpServer = new HttpServer(app);
 const io = new IOServer(httpServer);
-const PORT = 2374;
-const productos = require("./controllers/productos.js");
+const PORT = process.env.PORT || 8080;
+const productos = require("./controllers/product.js");
+const carrito = require("./controllers/carrito.js");
+const ManejoProductos = require("./objectsManager/prodManager.js");
+const newProdMgr = new ManejoProductos("./productos.txt");
+const newCarritoMgr = new ManejoProductos("./carrito.txt");
+
+//local vars
 let prods = [];
 let messages = [];
-const ManejoProductos = require("./manejoProductos/manejoProductos.js");
-const newProdMgr = new ManejoProductos("./productos.txt");
+
 
 //configuracion de app middleware
 app.use(express.json());
@@ -35,7 +40,8 @@ app.engine(
 
 app.set("view engine", "hbs");
 app.set("views", "./views");
-app.use("/", productos);
+app.use("/api/productos", productos);
+app.use("/api/carrito", carrito);
 
 //escucha de server
 const server = httpServer.listen(PORT, async () => {
@@ -78,16 +84,19 @@ io.on("connection", (socket) => {
     );
 
   const compileChatTmp = hnbl.compile(hnbleChatTmpl);
-  const dataChatTmp = compileChatTmp({messages : messages, emptyProds : true})
+  const dataChatTmp = compileChatTmp({messages : messages})
 
   //en inicio emit de todos los mensajes
   socket.emit("messages", dataChatTmp);
 
   //to all clients
 
-  socket.on("new-message", (data) => {
-    mensajes.push({ socketid: socket.id, mensaje: data });
-    io.sockets.emit("mensajes", mensajes);
+  socket.on("new-msg", async (data) => {
+    messages.push(data);
+    await fs.promises.writeFile('mensajes.txt', `${JSON.stringify(messages)}`);
+    const compileChatTmp = hnbl.compile(hnbleChatTmpl);
+    const dataChatTmp = compileChatTmp({messages : messages})
+    io.sockets.emit("messages", dataChatTmp);
   });
 
   socket.on("new-product", async (data) => {
@@ -95,11 +104,7 @@ io.on("connection", (socket) => {
     prods = await newProdMgr.getAll();
     const compileTmp = hnbl.compile(hnbleTmpl);
     const dataTmp = compileTmp({products : prods, emptyProds : true})
-    io.sockets.emit("prods", dataTmp);
+    io.sockets.emit("products", dataTmp);
   });
 
-  //message from client
-  socket.on("clientNotif", (data) => {
-    console.log(data);
-  });
 });
