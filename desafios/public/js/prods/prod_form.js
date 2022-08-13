@@ -1,4 +1,22 @@
-const socket = io.connect();
+// const socket = io.connect();
+
+window.addEventListener('load', (event) => {
+    getData('/')
+    .then((data) => {
+    //compile hbs and render
+    let template = fetchTemplate(JSON.parse(data), "templates/prodsForms.hbs", "prodCards");
+    let emptyProds = data.length == 0;
+    const html = template({ isAdmin : data.isAdmin });
+    document.querySelector("body").innerHTML = html;
+  });
+});
+
+async function fetchTemplate(data, url, domElem) {
+  const template = await fetch(url);
+  const textTemplate = await template.text();
+  const functionTemplate = Handlebars.compile(textTemplate);
+  return functionTemplate;
+}
 
 async function addProduct(){
   let name = document.getElementById('inp_name').value;
@@ -27,9 +45,13 @@ async function addProduct(){
   stock = "";
 
   //fetch
-  postData('/api/productos', newProd)
+  postData('/', newProd)
   .then((data) => {
     //compile hbs and render
+    let tmpl = fetchTemplate(JSON.parse(data), "templates/prods_table.hbs", "prodCards");
+    let emptyProds = data.length == 0;
+    const html = tmpl({ products: data, emptyProds: emptyProds });
+    document.querySelector("prodCards").innerHTML = html;
   });
 }
 
@@ -46,6 +68,16 @@ async function postData(url = '', data = {}) {
   return response.json(); // parses JSON response into native JavaScript objects
 }
 
+async function getData(url = '') {
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+  return response.json(); // parses JSON response into native JavaScript objects
+}
+
 function render(data) {
   const html = data
     .map((elem) => {
@@ -57,10 +89,10 @@ function render(data) {
   document.getElementById("prodTable").innerHTML = html;
 }
 
-//From Server
-socket.on("prods", (data) => {
-  document.getElementById("prodsInForm").innerHTML = data;
-});
+// //From Server
+// socket.on("prods", (data) => {
+//   document.getElementById("prodsInForm").innerHTML = data;
+// });
 
 
 (function () {

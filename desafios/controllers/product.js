@@ -2,7 +2,7 @@ const express = require("express");
 const prodMgr = require("../objectsManager/prodManager.js");
 const { upload } = require("../fileManager/multerArchives.js");
 const router = express.Router();
-const util = require("../utilidades/utilProducts.js");
+const util = require("../utils/utilProducts.js");
 const newProdMgr = new prodMgr("./productos.txt");
 const admin = true;
 // router.get("/", async (req, res) => {
@@ -14,16 +14,25 @@ const admin = true;
 //   }
 // });
 
-router.get("/:id?", async function (req, res) {
+router.get("/", async function (req, res) {
+  try {
+    //if if getbyId else getAll
+    const allProducts =await newProdMgr.getAll();
+    res.status(200).send({ allProducts : allProducts , isAdmin: admin});
+    // res.render("ingresoproductos.hbs", {
+    //   products: allProducts, emptyProds
+    // });
+  } catch (error) {
+    res.status(500).send(`Error: ${JSON.stringify(error)}`);
+  }
+});
+
+router.get("/:id", async function (req, res) {
   try {
     const { id } = req.params.id;
     //if if getbyId else getAll
     const allProducts = id == null ? await newProdMgr.getAll() : await newProdMgr.getById(id);
-    const emptyProds = false;
-    res.status(200).send({ allProducts , isAdmin: admin});
-    // res.render("ingresoproductos.hbs", {
-    //   products: allProducts, emptyProds
-    // });
+    res.status(200).send({ allProducts : allProducts , isAdmin: admin});
   } catch (error) {
     res.status(500).send(`Error: ${JSON.stringify(error)}`);
   }
@@ -45,9 +54,10 @@ router.post("/", async (req, res) => {
   try {
     //let newProdId = await newProdMgr.save(newProd);
     await newProdMgr.save(newProd);
+    const allProducts = await newProdMgr.getAll();
     res
     .status(200)
-    .send(`${JSON.stringify(newProdId)}`);
+    .send(`${JSON.stringify(allProducts)}`);
     // res.writeHead(301, { Location: "/productos" });
     // return res.end();
   } catch (error) {

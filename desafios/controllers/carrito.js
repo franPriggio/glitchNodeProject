@@ -1,7 +1,6 @@
 const express = require("express");
 const CartMgr = require("../objectsManager/cartManager.js");
 const { upload } = require("../fileManager/multerArchives.js");
-const util = require("../utilidades/utilProducts.js");
 const router = express.Router();
 const newCartMgr = new CartMgr("./cart.txt");
 
