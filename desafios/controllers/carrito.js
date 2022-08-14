@@ -18,7 +18,7 @@ router.post("/", async (req, res) => {
 });
 
 router.delete("/:id", async (req, res) => {
-  const { id } = req.params.id;
+  const id = req.params.id;
 
   if (isNaN(id)) {
     res.status(400).send({ error: "El parametro debe ser numerico" });
@@ -35,13 +35,14 @@ router.delete("/:id", async (req, res) => {
 
 router.get("/:id/productos?", async function (req, res) {
 
-   if (isNaN(id) || !id) {
-    res.status(400).send({ error: "El parametro debe ser numerico y no vacio" });
-    return;
-  }
-
   try {
-    const { id } = req.params.id;
+    const id  = req.params.id;
+
+    if (isNaN(id) || !id) {
+      res.status(400).send({ error: "El parametro debe ser numerico y no vacio" });
+      return;
+    }
+
     //if if getbyId else getAll
     const allProducts = await newCartMgr.getAllCartProducts(id);
     res
@@ -53,7 +54,7 @@ router.get("/:id/productos?", async function (req, res) {
 });
 
 router.post("/:id/productos", async (req, res) => {
-  const { id } = req.params.id;
+  const id = req.params.id;
 
   if (isNaN(id)) {
     res.status(400).send({ error: "El parametro debe ser numerico" });

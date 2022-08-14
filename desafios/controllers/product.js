@@ -5,34 +5,13 @@ const router = express.Router();
 const util = require("../utils/utilProducts.js");
 const newProdMgr = new prodMgr("./productos.txt");
 const admin = true;
-// router.get("/", async (req, res) => {
-//   try {
-//     const allProducts = await newProdMgr.getAll();
-//     res.status(200).send({ allProducts });
-//   } catch (error) {
-//     res.status(500).send(`Error: ${JSON.stringify(error)}`);
-//   }
-// });
 
-router.get("/", async function (req, res) {
+router.get("/:id?", async function (req, res) {
   try {
-    //if if getbyId else getAll
-    const allProducts =await newProdMgr.getAll();
-    res.status(200).send({ allProducts : allProducts , isAdmin: admin});
-    // res.render("ingresoproductos.hbs", {
-    //   products: allProducts, emptyProds
-    // });
-  } catch (error) {
-    res.status(500).send(`Error: ${JSON.stringify(error)}`);
-  }
-});
-
-router.get("/:id", async function (req, res) {
-  try {
-    const { id } = req.params.id;
+    const id = req.params.id;
     //if if getbyId else getAll
     const allProducts = id == null ? await newProdMgr.getAll() : await newProdMgr.getById(id);
-    res.status(200).send({ allProducts : allProducts , isAdmin: admin});
+    res.status(200).send({ allProducts : allProducts});
   } catch (error) {
     res.status(500).send(`Error: ${JSON.stringify(error)}`);
   }
@@ -72,7 +51,7 @@ router.put("/:id", async (req, res) => {
     return;
   }
 
-  const { id } = req.params.id;
+  const id = req.params.id;
 
   if (isNaN(id)) {
     res.status(400).send({ error: "El parametro debe ser numerico" });
@@ -105,7 +84,7 @@ router.delete("/:id", async (req, res) => {
     return;
   }
 
-  const { id } = req.params.id;
+  const id = req.params.id;
 
   if (isNaN(id)) {
     res.status(400).send({ error: "El parametro debe ser numerico" });

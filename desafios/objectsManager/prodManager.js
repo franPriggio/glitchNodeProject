@@ -16,12 +16,16 @@ class ProdManager {
     );
     let contenidoObjActual = JSON.parse(contenidoActual);
     const updatedProducts = contenidoObjActual.map((obj) => {
-      obj.id === object.id
+      obj.id == object.id
         ? {
             ...obj,
-            tile: object.title,
+            name: object.name,
             price: object.price,
-            thumbnail: object.thumbnail,
+            url: object.url,
+            desc: object.desc,
+            timestamp: object.timestamp,
+            code: object.code,
+            stock: object.stock
           }
         : obj;
     });
@@ -79,16 +83,20 @@ class ProdManager {
     }
   }
 
-  async getById(Number) {
+  async getById(num) {
     const fs = require("fs");
     //leo contenido actual y parseo
     const contenidoActual = await fs.promises.readFile(
       this.nombreArchivo,
       "utf-8"
     );
+    console.log("num: " + num);
     let contenidoObjActual = JSON.parse(contenidoActual);
 
-    const findProduct = contenidoObjActual.find((prod) => prod.id === Number);
+    console.log("contenidoObjActual: " + JSON.stringify(contenidoObjActual));
+
+    const findProduct = contenidoObjActual.find((prod) => prod.id == num);
+      console.log("findProduct: " + findProduct);
     return !findProduct ? "No existe producto" : findProduct;
   }
 
@@ -103,7 +111,7 @@ class ProdManager {
     return JSON.parse(contenidoActual);
   }
 
-  async deleteById(Number) {
+  async deleteById(num) {
     try {
       const fs = require("fs");
       //leo contenido actual y parseo
@@ -113,7 +121,7 @@ class ProdManager {
       );
 
       const deletedObject = JSON.parse(contenidoActual).filter(
-        (el) => el.id != Number
+        (el) => el.id != num
       );
 
       await fs.promises.writeFile(

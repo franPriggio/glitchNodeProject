@@ -7,10 +7,9 @@ class CartManager {
   }
 
   async newCart() {
-    // id, timestamp(carrito), 
-    // productos: { id, timestamp(producto), nombre, descripcion, código, foto (url), precio, stock }
+
     const newCart = {
-      timestamp : String.toString(Date.now()),
+      timestamp : Date.now().toString(),
       products : []
     }
     const fs = require("fs");
@@ -26,13 +25,13 @@ class CartManager {
         storedData = await fs.promises.writeFile(this.myFile, "");
       }
 
-       if (storedData === "") {
-        newCart["cartId"] = 1;
+       if (storedData == "") {
+        newCart["id"] = 1;
         this.carts.push(newCart);
 
         await fs.promises.writeFile(
           this.fileName,
-          JSON.stringify(this.newCart)
+          JSON.stringify(this.carts)
         );
         return newCart["id"];
       }
@@ -85,7 +84,7 @@ class CartManager {
       "utf-8"
     );
     let storedData = JSON.parse(storedFileData);
-    const findCart = storedData.find((prod) => prod.id === id);
+    const findCart = storedData.find((prod) => prod.id == id);
     return !findCart.products || findCart.products.length ==0 ? "Carrito vacio o no existente" : findCart.products;
   }
 
@@ -97,16 +96,17 @@ class CartManager {
       this.fileName,
       "utf-8"
     );
+    console.log('id: ' + id);
     let storedData = JSON.parse(storedFile);
-    const findCart = storedData.find((prod) => prod.id === id);
-    let newProductList = findCart.products.push(newProd);
+    const findCart = storedData.find((prod) => prod.id == id);
+
+    let newProdList = [...findCart.products, newProd];
     const updatedCarts = storedData.map((obj) => {
-      obj.id === id
-        ? {
-            ...obj,
-            products : newProductList,
-          }
-        : obj;
+      if(obj.id == id) {
+        return {...obj, products : newProdList }
+       } else {   
+        return obj; 
+      }
     });
     this.carts = updatedCarts;
 
@@ -128,16 +128,15 @@ class CartManager {
         "utf-8"
       );
       let storedData = JSON.parse(storedFile);
-      const findCart = storedData.find((prod) => prod.id === id);
-      const deletedProduct = findCart.filter(
+      const findCart = storedData.find((prod) => prod.id == id);
+      const deletedProduct = findCart.products.filter(
           (el) => el.id != id_prod);
       const updatedCarts = storedData.map((obj) => {
-      obj.id === id
-        ? {
-            ...obj,
-            products : deletedProduct,
-          }
-        : obj;
+        if(obj.id == id) {
+        return {...obj, products : deletedProduct }
+       } else {   
+        return obj; 
+      }
     });
     this.carts = updatedCarts;
     
