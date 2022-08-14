@@ -63,6 +63,7 @@ router.post("/:id/productos", async (req, res) => {
 
   try {
     const newProd = req.body;
+    
     const producto = await newCartMgr.addProductToCart(id, newProd);
     res.status(200).send({ producto });
   } catch (error) {

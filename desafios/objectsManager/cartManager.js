@@ -91,14 +91,14 @@ class CartManager {
   async addProductToCart(id, newProd) {
 
     const fs = require("fs");
-    //leo contenido actual y parseo
     const storedFile = await fs.promises.readFile(
       this.fileName,
       "utf-8"
     );
-    console.log('id: ' + id);
+    
     let storedData = JSON.parse(storedFile);
     const findCart = storedData.find((prod) => prod.id == id);
+    if(!findCart) throw 'Cart not found';
 
     let newProdList = [...findCart.products, newProd];
     const updatedCarts = storedData.map((obj) => {
@@ -129,8 +129,9 @@ class CartManager {
       );
       let storedData = JSON.parse(storedFile);
       const findCart = storedData.find((prod) => prod.id == id);
-      const deletedProduct = findCart.products.filter(
-          (el) => el.id != id_prod);
+      if(!findCart || findCart.products?.products) throw 'Cart not found';
+
+      const deletedProduct = findCart.products.filter((el) => el.id != id_prod);
       const updatedCarts = storedData.map((obj) => {
         if(obj.id == id) {
         return {...obj, products : deletedProduct }
