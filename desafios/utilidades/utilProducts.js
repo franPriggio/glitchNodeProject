@@ -1,4 +1,4 @@
-class util {
+class UtilProducts {
   constructor() {}
   generateRandom(min = 1, max) {
     // find diff
@@ -16,4 +16,4 @@ class util {
     return rand;
   }
 }
-module.exports = util;
+module.exports = UtilProducts;

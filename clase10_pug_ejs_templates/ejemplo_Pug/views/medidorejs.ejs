@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%-include("./partials/head");%>
+  </head>
+  <body class="container">
+    <header><%-include('./partials/header', {variant: page});%></header>
+    <main>
+      <div class="jumbotron">
+        <h1><%=tagline%></h1>
+        <ul>
+          <%mascots.forEach(function(mascot){%>
+          <li>
+            <strong><%=mascot.name%></strong>
+            representing<%=mascot.organization%>,born<%=mascot.birth_year%>
+          </li>
+          <%});%>
+        </ul>
+      </div>
+    </main>
+
+    <footer><%-include('./partials/footer');%></footer>
+  </body>
+</html>

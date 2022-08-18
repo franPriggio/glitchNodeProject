@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%-include("./partials/head");%>
+  </head>
+  <body class="container">
+    <header><%-include('./partials/header', {variant: page});%></header>
+    <main>
+      <div class="jumbotron">
+        <h1><%=tagline%></h1>
+      </div>
+    </main>
+
+    <footer><%-include('./partials/footer');%></footer>
+  </body>
+</html>

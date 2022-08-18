@@ -1,0 +1,58 @@
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
+      crossorigin="anonymous"/>
+    <link
+      href="/css/prods/prod_form.css"
+      rel="stylesheet"
+      type="text/css"/>
+    <title>Products Form</title>
+  </head>
+  <body>
+    <div class="container form-body">
+      <div class="row">
+          <div class="form-holder col-12">
+              <div class="form-content">
+                  <div class="form-items">
+                      <h3>Enter product data</h3>
+                      <p>Please, fill in the data below.</p>
+                      <form class="requires-validation" novalidate>
+                        
+                        <div class="col-md-12">
+                          <label for="title" class="form-label fw-semibold">Name:</label>
+                          <input id="inp_name" type="text" class="form-control" name="title" required/>
+                          <div class="invalid-feedback">Name field cannot be blank!</div>
+                        </div>
+                        <div class="col-md-12 mt-3">
+                          <label for="price" class="form-label fw-semibold">Price:</label>
+                          <input id="inp_price" type="number" class="form-control" name="price" required/>
+                          <div class="invalid-feedback">Price must be a number and cannot be blank!</div>
+                        </div>
+
+                        <div class="col-md-12 mt-3">
+                          <label for="thumbnail" class="form-label fw-semibold">Photo URL:</label>
+                          <input id="inp_url" type="text" class="form-control" name="thumbnail" />
+                        </div>
+
+                        <div class="form-button mt-5">
+                            <button id="addProd" onclick="addProduct()" class="btn btn-primary">Add</button>
+                        </div>
+                        <!-- <button id="clear" class="btn btn-primary" onclick="clearForm()">Clear Form</button> -->
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div id="prodsInForm" class="row"></div>
+
+      <div id="chat" class="row"></div>
+      
+    </div>
+    <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
+    <script src="/js/prods/prod_form.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+  </body>
