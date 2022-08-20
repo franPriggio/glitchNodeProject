@@ -1,4 +1,4 @@
-const { options } = require("../db_options/sqlite_config.js");
+const { options } = require("../db_options/sqlite_config");
 const knex = require("knex")(options);
 
 // SELECT * FROM cars

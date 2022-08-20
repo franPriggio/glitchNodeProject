@@ -1,4 +1,4 @@
-const { options } = require("../db_options/mariaDB.js");
+const { options } = require("../db_options/sqlite_config");
 const knex = require("knex")(options);
 
 const cars = [
