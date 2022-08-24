@@ -1,18 +1,7 @@
-const express = require("express");
-const ManejoProductos = require("../manejoProductos/manejoProductos.js");
-const { upload } = require("../manejoArchivos/multerArchives.js");
+import express from 'express';
+import { HandleProducts } from '../hndlProds/handleProducts.js'
 const router = express.Router();
-const util = require("../utilidades/utilProducts.js");
-const newProdMgr = new ManejoProductos("./productos.txt");
-
-// router.get("/", async (req, res) => {
-//   try {
-//     const allProducts = await newProdMgr.getAll();
-//     res.status(200).send({ allProducts });
-//   } catch (error) {
-//     res.status(500).send(`Error: ${JSON.stringify(error)}`);
-//   }
-// });
+const newProdMgr = new HandleProducts();
 
 router.get("/", async function (req, res) {
   const allProducts = await newProdMgr.getAll();
@@ -54,32 +43,32 @@ router.post("/productos", async (req, res) => {
   }
 });
 
-// Tener en cuenta que el name(nombre,en español)del campo archivo debe
-// ser el mismo que el argumento myFile pasadoala función upload.single.
-router.post("/uploadfile", upload.single("myFile"), (req, res, next) => {
-  const file = req.file;
-  if (!file) {
-    const error = new Error("Please uploadafile");
-    error.httpStatusCode = 400;
-    return next(error);
-  }
-  res.send(file);
-});
+// // Tener en cuenta que el name(nombre,en español)del campo archivo debe
+// // ser el mismo que el argumento myFile pasadoala función upload.single.
+// router.post("/uploadfile", upload.single("myFile"), (req, res, next) => {
+//   const file = req.file;
+//   if (!file) {
+//     const error = new Error("Please uploadafile");
+//     error.httpStatusCode = 400;
+//     return next(error);
+//   }
+//   res.send(file);
+// });
 
-// Uploading multiple files
-router.post(
-  "/uploadmultiple",
-  upload.array("myFiles", 10),
-  (req, res, next) => {
-    const files = req.files;
-    if (!files) {
-      const error = new Error("Please choose files");
-      error.httpStatusCode = 400;
-      return next(error);
-    }
-    res.send(files);
-  }
-);
+// // Uploading multiple files
+// router.post(
+//   "/uploadmultiple",
+//   upload.array("myFiles", 10),
+//   (req, res, next) => {
+//     const files = req.files;
+//     if (!files) {
+//       const error = new Error("Please choose files");
+//       error.httpStatusCode = 400;
+//       return next(error);
+//     }
+//     res.send(files);
+//   }
+// );
 
 router.post("/:id", async (req, res) => {
   const { id } = req.params.id;
@@ -161,4 +150,4 @@ router.get("/productoRandom", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

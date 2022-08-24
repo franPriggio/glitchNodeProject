@@ -1,60 +1,59 @@
-const express = require("express");
-const { Server: HttpServer } = require("http");
-const handlebars = require("express-handlebars");
-const hnbl = require("handlebars");
-const path = require("path")
-const { Server: IOServer } = require("socket.io");
+// const express = require("express");
+import express from 'express';
+import { createServer } from 'http';
+import { engine } from 'express-handlebars';
+import HandleBars from 'handlebars'
+import { Server } from "socket.io";
 const app = express();
-const fs = require("fs");
-const httpServer = new HttpServer(app);
-const io = new IOServer(httpServer);
+import fs from 'fs';
+const httpServer = createServer();
+const io = new Server(httpServer);
 const PORT = 2374;
-const productos = require("./controllers/productos.js");
+import router from './src/controllers/productos.js';
+// const productos = require("./src/controllers/productos.js");
 let prods = [];
 let messages = [];
-const ManejoProductos = require("./manejoProductos/manejoProductos.js");
-const newProdMgr = new ManejoProductos("./productos.txt");
+import { HandleProducts } from './src/hndlProds/handleProducts.js'
+//const HandleProds = require("./src/hndlProds/handleProducts.js");
+const newProdMgr = new HandleProducts();
+import { HandleMessages } from './src/hndlMsgs/handleMessages.js'
+// const handleMsgs = require("./src/hndlMsgs/handleMessages.js");
+const newMsgMgr = new HandleMessages();
 
 //configuracion de app middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use("/static", express.static(__dirname + "/public"));
-app.use("/css", express.static(__dirname + "/public/css"));
-app.use("/js", express.static(__dirname + "/public/js"));
-app.use("/files", express.static(__dirname + "/public/files"));
+app.use("/static", express.static("/public"));
+app.use("/css", express.static("/public/css"));
+app.use("/js", express.static("/public/js"));
+app.use("/files", express.static("/public/files"));
 
 app.engine(
   "hbs",
-  handlebars.engine({
+  engine({
     extname: ".hbs",
     defaultLayout: "index.hbs",
-    layoutsDir: __dirname + "/views/layouts",
-    partialsDir: __dirname + "/views/partials"
+    layoutsDir: "/views/layouts",
+    partialsDir: "/views/partials"
   })
 );
 
 app.set("view engine", "hbs");
 app.set("views", "./views");
-app.use("/", productos);
+app.use("/", router);
 
 //escucha de server
 const server = httpServer.listen(PORT, async () => {
-  console.log(`Servidor http escuchando en el puerto ${server.address().port}`);
-  prods = await newProdMgr.getAll();
+console.log(`Servidor http escuchando en el puerto ${server.address().port}`);
 
-  fs.promises
-    .readFile('mensajes.txt')
-    .then((data) => JSON.parse(data))
-    .then((data) => {
-      for (const msg of data) {
-        messages.push(msg);
-      }
-    });
+//load products
+prods = await newProdMgr.getAll();
+//load messages
+messages = newMsgMgr.getAll();
 
 });
 
 server.on("error", (error) => console.log(`Error en servidor ${error}`));
-
 
 //socket connection
 //message to client
@@ -66,7 +65,7 @@ io.on("connection", (socket) => {
       "utf-8"
     );
 
-  const compileTmp = hnbl.compile(hnbleTmpl);
+  const compileTmp = HandleBars.compile(hnbleTmpl);
   const dataTmp = compileTmp({products : prods, emptyProds : true})
 
   //en inicio emit de todos los productos
@@ -75,25 +74,25 @@ io.on("connection", (socket) => {
   const hnbleChatTmpl = fs.readFileSync(
       "./views/chat.hbs",
       "utf-8"
-    );
+  );
 
-  const compileChatTmp = hnbl.compile(hnbleChatTmpl);
+  const compileChatTmp = HandleBars.compile(hnbleChatTmpl);
   const dataChatTmp = compileChatTmp({messages : messages, emptyProds : true})
 
   //en inicio emit de todos los mensajes
   socket.emit("messages", dataChatTmp);
 
   //to all clients
-
-  socket.on("new-message", (data) => {
-    mensajes.push({ socketid: socket.id, mensaje: data });
-    io.sockets.emit("mensajes", mensajes);
+  socket.on("new-message", async (data) => {
+    await newMsgMgr.save(data);
+    let messages = await newMsgMgr.getAll();
+    io.sockets.emit("mensajes", messages);
   });
 
   socket.on("new-product", async (data) => {
     await newProdMgr.save(data);
     prods = await newProdMgr.getAll();
-    const compileTmp = hnbl.compile(hnbleTmpl);
+    const compileTmp = HandleBars.compile(hnbleTmpl);
     const dataTmp = compileTmp({products : prods, emptyProds : true})
     io.sockets.emit("prods", dataTmp);
   });
