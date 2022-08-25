@@ -33,7 +33,7 @@ const prods = [
 ];
 
 // insert cars to BD
-knexConnection("Products").insertMany(prods)
+knexConnection("Products").insert(prods)
   .then(() => {
     console.log("Prods inserted");
   })

@@ -7,14 +7,13 @@ export class HandleMessages {
         this.messages = [];
     }
 
-    static dbQuery = new ReadMessages();
-    static dbSave = new SaveMessages();
-
     async getAll() {
+        const dbQuery = new ReadMessages();
         return dbQuery.getMessages();
     }
 
     async save(object) {
+        const  dbSave = new SaveMessages();
         try {
             dbSave.saveMessage(object)
         } catch (error) {

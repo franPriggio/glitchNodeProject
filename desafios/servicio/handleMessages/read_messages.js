@@ -1,4 +1,4 @@
-import { knexConnnection } from '../db_options/sqlite_config.js'
+import { knexConnection } from '../db_options/sqlite_config.js'
 
 export class ReadMessages {
 
@@ -6,16 +6,17 @@ export class ReadMessages {
     
     async getMessages() {
         // SELECT * FROM cars
-        knexConnnection.from("Messages")
+        knexConnection.from("Messages")
         .select("*")
         .then((rows) => {
           console.log(rows);
+          return rows;
         })
         .catch((err) => {
           console.log(err);
         })
         .finally(() => {
-          knex.destroy();
+          knexConnection.destroy();
         });
     }
 }

@@ -1,6 +1,6 @@
 import knex from 'knex';
 
-const options = {
+let options = {
   client: "mysql",
   connection: {
     host: "127.0.0.1",
@@ -9,4 +9,5 @@ const options = {
     database: "ecom",
   },
 };
-module.exports = options;
+
+export const knexConnection = knex(options);

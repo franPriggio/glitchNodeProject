@@ -1,21 +1,20 @@
-const { options } = require('./db_options/sqlite_config.js');
-const knex = require('knex')(options);
+import { knexConnection } from './db_options/sqlite_config.js'
 
 // create table cars
-knex.schema.createTable('Messages', table => {
+knexConnection.schema.createTable('Messages', table => {
     table.increments('id');
     table.string('Message');
     table.string('Email');
     table.string('Date');
 })
 .then(() => {
-    console.log('Table cars created');
+    console.log('Table Messages created');
 })
 .catch(err => {
     console.log(err);
 })
 .finally(() => {
-    knex.destroy();
+    knexConnection.destroy();
 });
 
 const msgs = [
@@ -25,7 +24,7 @@ const msgs = [
 ];
 
 // insert cars to BD
-knex("Messages").insertMany(msgs)
+knexConnection("Messages").insert(msgs)
   .then(() => {
     console.log("Messages inserted");
   })
@@ -33,5 +32,5 @@ knex("Messages").insertMany(msgs)
     console.log(err);
   })
   .finally(() => {
-    knex.destroy();
+    knexConnection.destroy();
   });

@@ -8,4 +8,4 @@ export const options = {
   useNullAsDefault: true,
 };
 
-export const knexConnnection = knex(options);
+export const knexConnection = knex(options);

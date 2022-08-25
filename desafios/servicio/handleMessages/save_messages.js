@@ -1,4 +1,4 @@
-import { knexConnnection } from '../db_options/sqlite_config.js'
+import { knexConnection } from '../db_options/sqlite_config.js'
 
 export class SaveMessages {
 
@@ -6,7 +6,7 @@ export class SaveMessages {
     
     async saveMessage(msg) {
         // SELECT * FROM cars
-        knexConnnection("Messages").insert(msg)
+        knexConnection("Messages").insert(msg)
         .then(() => {
             console.log("Message inserted");
         })
@@ -14,7 +14,7 @@ export class SaveMessages {
             console.error('Error saving product: ' + err);
         })
         .finally(() => {
-            knex.destroy();
+            knexConnection.destroy();
         });
     }
 }
