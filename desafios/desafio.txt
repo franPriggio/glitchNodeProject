@@ -1,0 +1,103 @@
+1. Crear base de datos ecommerce
+use ecommerce;
+
+2. Crear colecciones mensajes y Productos
+db.createCollection("mensajes");
+db.createCollection("productos");
+
+3. Agregar 10 documentos con valores distintos a las colecciones mensajes y p,
+roductos. El formato de los documentos debe estar en correspondencia con el que venimos utilizando en el entregable con base de datos MariaDB. 
+
+Definir las claves de los documentos en relación a los campos de las tablas de esa base. En el caso de los productos, poner valores al campo precio entre los 100 y 5000 pesos(eligiendo valores intermedios, ej: 120, 580, 900, 1280, 1700, 2300, 2860, 3350, 4320, 4990). 
+
+db.productos.insertMany([
+  { Name: "Ferrari", Price: 100, Photo: "https://www.img.com", Timestamp: "12/07/2020", Description: "Desc Prod", Code: "ST-1", Stock: 10  },
+  { Name: "Lamborghini", Price: 220, Photo: "https://www.img.com", Timestamp: "12/07/2020" , Description: "Desc Prod", Code: "ST-1", Stock: 10},
+  { Name: "Bugatti", Price: 580, Photo: "https://www.img.com", Timestamp: "12/07/2020", Description: "Desc Prod", Code: "ST-1", Stock: 10 },
+  { Name: "Porsche", Price: 900, Photo: "https://www.img.com", Timestamp: "12/07/2020", Description: "Desc Prod", Code: "ST-1", Stock: 10 },
+  { Name: "Mercedes", Price: 1280, Photo: "https://www.img.com", Timestamp: "12/07/2020", Description: "Desc Prod", Code: "ST-1", Stock: 10 },
+  { Name: "Audi", Price: 1700, Photo: "https://www.img.com", Timestamp: "12/07/2020", Description: "Desc Prod", Code: "ST-1", Stock: 10 },
+  { Name: "BMW", Price: 2300, Photo: "https://www.img.com", Timestamp: "12/07/2020", Description: "Desc Prod", Code: "ST-1", Stock: 10 },
+  { Name: "Volkswagen", Price: 2860, Photo: "https://www.img.com", Timestamp: "12/07/2020", Description: "Desc Prod", Code: "ST-1", Stock: 10},
+  { Name: "Ford", Price: 3350, Photo: "https://www.img.com", Timestamp: "12/07/2020", Description: "Desc Prod", Code: "ST-1", Stock: 10},
+  { Name: "Volvo", Price: 4320, Photo: "https://www.img.com", Timestamp: "12/07/2020", Description: "Desc Prod", Code: "ST-1", Stock: 10},
+  { Name: "Fiat", Price: 4995, Photo: "https://www.img.com", Timestamp: "12/07/2020", Description: "Desc Prod", Code: "ST-1", Stock: 10}
+]);
+
+db.mensajes.insertMany([
+  { Message: "Hola", Email: "lala@pip.com", Date: "12/07/2020"},
+  { Message: "Que haces?", Email: "lulu@pip.com", Date: "12/07/2020"},
+  { Message: "Almorzando, vos?", Email: "lala@pip.com", Date: "12/07/2020" },
+  { Message: "Tomando mate", Email: "lulu@pip.com", Date: "12/07/2020" },
+  { Message: "Uff que amargo", Email: "lala@pip.com", Date: "12/07/2020" },
+  { Message: "No, le pongo azucar", Email: "lulu@pip.com", Date: "12/07/2020" },
+  { Message: "Ah que loco", Email: "lala@pip.com", Date: "12/07/2020" },
+  { Message: "Tambien le pongo torta", Email: "lulu@pip.com", Date: "12/07/2020" },
+  { Message: "Como?", Email: "lala@pip.com", Date: "12/07/2020" },
+  { Message: "Pico largo nariz corta", Email: "lulu@pip.com", Date: "12/07/2020" }
+]);
+
+
+4. Listar todos los documentos en cada colección.
+
+db.productos.find().pretty();
+db.mensajes.find().pretty();
+
+5.Mostrar la cantidad de documentos almacenados en cada una de ellas.
+
+db.productos.estimatedDocumentCount();
+db.mensajes.estimatedDocumentCount();
+
+Realizar un CRUD sobre la colección de productos:
+
+6. Agregar un producto más en la colección de productos 
+
+db.productos.insertOne({ Name: "GMC", Price: 4995, Photo: "https://www.img.com", Timestamp: "12/07/2020", Description: "Desc Prod", Code: "ST-1", Stock: 10});
+
+7. Realizar una consulta por nombre de producto específico:
+8. Listar los productos con precio menor a 1000 pesos.
+
+db.products.find({"Price" : {$lt:1000}});
+
+9. Listar los productos con precio entre los 1000 a 3000 pesos.
+
+db.products.find({$or: [{Price: {$gt: 1000}}, {Price: {$lt: 3000}}]});
+
+10. Listar los productos con precio mayor a 3000 pesos.
+
+db.products.find({"Price" : {$gt:3000}});
+
+11. Realizar una consulta que traiga sólo el nombre del tercer producto más barato.
+
+db.products.find({},{"Name":1}).skip(2).limit(1).sort({Price:1});
+
+12. Hacer una actualización sobre todos los productos, agregando el campo stock a todos ellos con un valor de 100.
+
+db.products.updateMany({}, {$set:{"stock": 100}});
+
+13. Cambiar el stock a cero de los productos con precios mayores a 4000 pesos.
+
+db.products.updateMany({"Price" : {$gt:000}}, {$set:{"stock": 0}});
+
+14. Borrar los productos con precio menor a 1000 pesos 
+
+db.products.deleteMany({"Price" : {$lt:1000}});
+
+15. Crear un usuario 'pepe' clave: 'asd456' que sólo pueda leer la base de datos ecommerce. Verificar que pepe no pueda cambiar la información.
+
+db.createUser(
+  {
+    user: "pepe",
+    pwd: "asd456",
+    roles: [
+       { role: "read", db: "ecommerce" }
+    ]
+  }
+)
+
+mongosh -u pepe -p asd456
+use products;
+
+db.products.find();
+
+db.productos.insertOne({ Name: "Jeep", Price: 4995, Photo: "https://www.img.com", Timestamp: "12/07/2020", Description: "Desc Prod", Code: "ST-1", Stock: 10})a
