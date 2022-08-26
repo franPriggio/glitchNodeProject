@@ -1,4 +1,4 @@
-import { knexConnection } from '../db_options/sqlite_config.js'
+import { knexConnection } from '../db_options/mariaDB.js'
 
 export class ReadMessages {
 

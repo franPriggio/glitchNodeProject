@@ -5,19 +5,20 @@ const newProdMgr = new HandleProducts();
 
 router.get("/", async function (req, res) {
   const allProducts = await newProdMgr.getAll();
-  const emptyProds = false;
-  res.render("ingresoproductos.hbs", {
-    products: [], emptyProds
-  });
+  // res.render("ingresoproductos.hbs", {
+  //   products: [], emptyProds
+  // });
+  res.status(200).send({allProducts})
 });
 
 router.get("/productos", async (req, res) => {
   try {
     const allProducts = await newProdMgr.getAll();
     const emptyProds = allProducts.length > 0;
-    res.render("mostrarproductos.hbs", {
-      products: allProducts, emptyProds
-    });
+    // res.render("mostrarproductos.hbs", {
+    //   products: allProducts, emptyProds
+    // });
+    res.status(200).send({allProducts})
   } catch (error) {
     res.status(500).send(`Error: ${JSON.stringify(error)}`);
   }
